@@ -27,7 +27,7 @@ This checklist separates checks completed from checks that still require a real 
 - [x] Contact field validates either a basic email address or a plausible phone number before showing the demo confirmation.
 - [x] Demo form confirmation no longer implies that an enquiry was actually delivered.
 - [x] Documented the static demo's security boundaries and production response-header recommendations in `SECURITY.md`.
-- [x] Added an explicit referrer policy and preconnected to the Three.js CDN origin.
+- [x] Added an explicit referrer policy and preconnected to the Three.js CDN origin.\n- [x] Expanded the three service-direction descriptions and clarified the technical and delivery process.\n- [x] Added a five-question FAQ section and linked it from both navigation systems.\n- [x] Marked the site as a concept project to avoid implying unverified real-world business credentials.
 
 ## Manual browser checks — pending
 
