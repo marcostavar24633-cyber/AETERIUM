@@ -68,3 +68,9 @@ This checklist separates checks completed from checks that still require a real 
 - The contact form is intentionally a front-end demo. It does not deliver, store, or transmit enquiries.
 - The site loads Three.js and web fonts from external CDNs; a network connection is required for those enhancements.
 - No real-device or browser visual test is claimed by this checklist. Mark manual items only after executing them.
+
+## Regression: below-the-fold sections (2026-11-15)
+- [ ] Открыть главную страницу и убедиться, что после hero отображаются манифест, коллекция, технологии, этапы, FAQ и контакты.
+- [ ] Проверить, что JavaScript не прерывается до инициализации `IntersectionObserver` для `.reveal`.
+- [ ] Проверить консоль браузера на `ReferenceError` при загрузке страницы.
+- [ ] Проверить отображение секций при включённом `prefers-reduced-motion`.
