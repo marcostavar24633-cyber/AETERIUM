@@ -17,6 +17,9 @@ This checklist separates checks completed from checks that still require a real 
 - [x] Three.js is loaded with `defer` to avoid blocking HTML parsing.
 - [x] WebGL animation pauses when the hero leaves the viewport or the tab is hidden, then resumes when visible.
 - [x] Browser theme-color metadata follows the saved light/dark theme on initial load and theme changes.
+- [x] Narrow-screen hero typography has responsive sizing and safe word wrapping.
+- [x] Header icon controls meet a 44px minimum touch target.
+- [x] Compact 320–380px layouts simplify the hero footer to prevent clipping.
 
 ## Manual browser checks — pending
 
