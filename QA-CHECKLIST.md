@@ -24,6 +24,8 @@ This checklist separates checks completed from checks that still require a real 
 - [x] Keyboard focus remains inside the orbit dialog, including unexpected focus escape.
 - [x] Primary navigation announces the currently active section with `aria-current="location"`.
 - [x] Non-interactive collection cards no longer advertise a pointer cursor.
+- [x] Contact field validates either a basic email address or a plausible phone number before showing the demo confirmation.
+- [x] Demo form confirmation no longer implies that an enquiry was actually delivered.
 
 ## Manual browser checks — pending
 
