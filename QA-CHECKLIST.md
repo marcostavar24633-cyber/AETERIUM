@@ -14,6 +14,9 @@ This checklist separates checks completed from checks that still require a real 
 - [x] Orbit menu traps Tab focus while open and restores focus on Escape/backdrop close.
 - [x] Theme preference is read from and written to local storage.
 - [x] WebGL context-loss fallback handler is present.
+- [x] Three.js is loaded with `defer` to avoid blocking HTML parsing.
+- [x] WebGL animation pauses when the hero leaves the viewport or the tab is hidden, then resumes when visible.
+- [x] Browser theme-color metadata follows the saved light/dark theme on initial load and theme changes.
 
 ## Manual browser checks — pending
 
