@@ -39,6 +39,39 @@ section{padding:130px 0;position:relative}.section-head{display:flex;justify-con
 @media(max-width:1050px){.hero-grid,.manifesto,.tech,.contact-grid{grid-template-columns:1fr}.hero-copy{margin:0;max-width:430px}.nav{gap:14px}.nav a{font-size:8px}.collection{grid-template-columns:1fr 1fr}.collection .card:last-child{display:none}}
 @media(max-width:700px){.wrap{width:calc(100% - 40px)}.topbar{top:9px;width:calc(100% - 18px);height:60px;padding:0 13px}.logo{font-size:12px}.nav{display:none}.hero{padding:140px 0 100px;min-height:100svh}.hero-grid{grid-template-columns:1fr}.hero h1{font-size:clamp(46px,13.5vw,88px);margin-top:28px;max-width:100%}.hero h1 span{margin-left:6%}.hero-copy{margin:0;max-width:330px}.hero-index{right:17px;top:40%;font-size:8px}.hero-bottom{font-size:7px;bottom:18px}section{padding:90px 0}.section-head{display:block;margin-bottom:38px}.section-head p{margin-top:22px}.manifesto h2{font-size:57px}.collection{grid-template-columns:1fr}.collection .card:last-child{display:block}.card{min-height:410px}.tech-visual{min-height:330px}.step{grid-template-columns:45px 1fr;gap:12px;padding:23px 0}.step p{grid-column:2}.step h3{font-size:23px}.number-grid{grid-template-columns:1fr 1fr;gap:32px 14px}.number strong{font-size:49px}.orbit{width:min(330px,94vw)}.orbit a{width:68px;height:68px;margin:-34px;transform:rotate(var(--a)) translateY(-120px) rotate(calc(-1*var(--a)))}.orbit-center{width:76px;height:76px}.contact{padding:95px 0 70px}}@media(max-width:380px){.hero-bottom{left:20px;right:20px;justify-content:flex-start;gap:18px}.hero-bottom span:last-child{display:none}.hero-index{display:none}.hero h1{font-size:clamp(44px,13vw,50px)}.hero-buttons .btn{max-width:100%;padding:0 18px;font-size:9px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.reveal{opacity:1;transform:none}}
+
+/* AETERIUM visual content layer — editorial architectural photography */
+.hero-fallback{
+ background:
+ linear-gradient(90deg,rgba(7,10,8,.94) 0%,rgba(7,10,8,.58) 48%,rgba(7,10,8,.12) 100%),
+ linear-gradient(0deg,rgba(7,10,8,.72),transparent 58%),
+ url("https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=2200&q=85") center 52%/cover no-repeat,
+ #090b0a;
+}
+.art{background-size:cover;background-position:center;isolation:isolate}
+.art:before{z-index:0;mix-blend-mode:screen;opacity:.45}
+.art:after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(0deg,rgba(5,7,6,.88),rgba(5,7,6,.05) 72%)}
+.art:not(.two):not(.three){
+ background-image:linear-gradient(135deg,rgba(8,15,11,.12),rgba(8,15,11,.22)),url("https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1100&q=82");
+}
+.art.two{
+ background-image:linear-gradient(135deg,rgba(8,15,11,.12),rgba(8,15,11,.2)),url("https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1100&q=82");
+}
+.art.three{
+ background-image:linear-gradient(135deg,rgba(8,15,11,.12),rgba(8,15,11,.2)),url("https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1100&q=82");
+}
+.tech-visual{
+ background:
+ linear-gradient(0deg,rgba(7,10,8,.5),rgba(7,10,8,.1)),
+ url("https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1400&q=82") center/cover no-repeat,
+ #101611;
+}
+.tech-visual:before,.tech-visual:after{mix-blend-mode:screen;opacity:.58}
+@media(max-width:700px){
+ .hero-fallback{background-position:58% center}
+ .art{background-position:center}
+}
+
 </style>
 </head>
 <body>
