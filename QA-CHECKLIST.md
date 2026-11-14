@@ -20,6 +20,10 @@ This checklist separates checks completed from checks that still require a real 
 - [x] Narrow-screen hero typography has responsive sizing and safe word wrapping.
 - [x] Header icon controls meet a 44px minimum touch target.
 - [x] Compact 320–380px layouts simplify the hero footer to prevent clipping.
+- [x] Orbit navigation is exposed as a labelled modal dialog.
+- [x] Keyboard focus remains inside the orbit dialog, including unexpected focus escape.
+- [x] Primary navigation announces the currently active section with `aria-current="location"`.
+- [x] Non-interactive collection cards no longer advertise a pointer cursor.
 
 ## Manual browser checks — pending
 
