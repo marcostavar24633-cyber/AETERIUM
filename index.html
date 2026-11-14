@@ -146,6 +146,13 @@ section{padding:130px 0;position:relative}.section-head{display:flex;justify-con
 .advantage-card p{max-width:310px;margin:0;font-size:12px;line-height:1.75;color:var(--muted)}
 @media(max-width:900px){.advantage-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:700px){.advantages{padding:76px 0 82px}.advantage-grid{grid-template-columns:1fr;gap:12px}.advantage-card{min-height:190px;padding:23px 21px}.advantage-card h3{margin-top:27px;font-size:29px}.advantage-card p{font-size:13px;max-width:100%;line-height:1.7}.section-head{margin-bottom:30px}}
+
+/* Small editorial photos inside the six advantage cards */
+.advantage-card{padding-top:20px}
+.advantage-photo{display:block;width:100%;height:92px;object-fit:cover;border-radius:3px 13px 3px 13px;opacity:.88;filter:saturate(.72);border:1px solid rgba(198,173,123,.22);box-shadow:0 8px 24px rgba(0,0,0,.22);transition:opacity .3s,filter .3s,transform .45s}
+.advantage-card:hover .advantage-photo{opacity:1;filter:saturate(.95);transform:scale(1.015)}
+.advantage-card h3{margin-top:17px}
+@media(max-width:700px){.advantage-photo{height:105px}.advantage-card{min-height:0}.advantage-card h3{margin-top:15px}}
 </style>
 </head>
 <body>
@@ -162,12 +169,12 @@ section{padding:130px 0;position:relative}.section-head{display:flex;justify-con
       <p>Шесть принципов, на которых строится продуманная световая среда: от первого замысла до точной настройки атмосферы.</p>
     </div>
     <div class="advantage-grid">
-      <article class="advantage-card"><span class="advantage-index">01</span><span class="advantage-symbol" aria-hidden="true">✳</span><h3>Архитектурный подход</h3><p>Световая композиция учитывает геометрию, пропорции и характер пространства.</p></article>
-      <article class="advantage-card"><span class="advantage-index">02</span><span class="advantage-symbol" aria-hidden="true">◌</span><h3>Сценарии атмосферы</h3><p>Разные режимы освещения для повседневных задач, отдыха и особых моментов.</p></article>
-      <article class="advantage-card"><span class="advantage-index">03</span><span class="advantage-symbol" aria-hidden="true">⌁</span><h3>Работа с материалом</h3><p>Подчёркиваем фактуру камня, дерева, металла и других поверхностей светом.</p></article>
-      <article class="advantage-card"><span class="advantage-index">04</span><span class="advantage-symbol" aria-hidden="true">◇</span><h3>Точная интеграция</h3><p>Учитываем расположение источников, инженерные условия и визуальную чистоту.</p></article>
-      <article class="advantage-card"><span class="advantage-index">05</span><span class="advantage-symbol" aria-hidden="true">⟡</span><h3>Комфорт для глаз</h3><p>Продумываем баланс яркости, контраста и направленности света для разных зон.</p></article>
-      <article class="advantage-card"><span class="advantage-index">06</span><span class="advantage-symbol" aria-hidden="true">⌖</span><h3>Индивидуальная настройка</h3><p>Подбираем решение под особенности объекта и согласованную концепцию проекта.</p></article>
+      <article class="advantage-card"><span class="advantage-index">01</span><span class="advantage-symbol" aria-hidden="true">✳</span><img class="advantage-photo" src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=520&q=80" alt="" loading="lazy" decoding="async"><h3>Архитектурный подход</h3><p>Световая композиция учитывает геометрию, пропорции и характер пространства.</p></article>
+      <article class="advantage-card"><span class="advantage-index">02</span><span class="advantage-symbol" aria-hidden="true">◌</span><img class="advantage-photo" src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=520&q=80" alt="" loading="lazy" decoding="async"><h3>Сценарии атмосферы</h3><p>Разные режимы освещения для повседневных задач, отдыха и особых моментов.</p></article>
+      <article class="advantage-card"><span class="advantage-index">03</span><span class="advantage-symbol" aria-hidden="true">⌁</span><img class="advantage-photo" src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=520&q=80" alt="" loading="lazy" decoding="async"><h3>Работа с материалом</h3><p>Подчёркиваем фактуру камня, дерева, металла и других поверхностей светом.</p></article>
+      <article class="advantage-card"><span class="advantage-index">04</span><span class="advantage-symbol" aria-hidden="true">◇</span><img class="advantage-photo" src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=520&q=80" alt="" loading="lazy" decoding="async"><h3>Точная интеграция</h3><p>Учитываем расположение источников, инженерные условия и визуальную чистоту.</p></article>
+      <article class="advantage-card"><span class="advantage-index">05</span><span class="advantage-symbol" aria-hidden="true">⟡</span><img class="advantage-photo" src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=520&q=80" alt="" loading="lazy" decoding="async"><h3>Комфорт для глаз</h3><p>Продумываем баланс яркости, контраста и направленности света для разных зон.</p></article>
+      <article class="advantage-card"><span class="advantage-index">06</span><span class="advantage-symbol" aria-hidden="true">⌖</span><img class="advantage-photo" src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=520&q=80" alt="" loading="lazy" decoding="async"><h3>Индивидуальная настройка</h3><p>Подбираем решение под особенности объекта и согласованную концепцию проекта.</p></article>
     </div>
   </div>
 </section>
