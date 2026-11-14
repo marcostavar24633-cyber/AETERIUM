@@ -153,6 +153,33 @@ section{padding:130px 0;position:relative}.section-head{display:flex;justify-con
 .advantage-card:hover .advantage-photo{opacity:1;filter:saturate(.95);transform:scale(1.015)}
 .advantage-card h3{margin-top:17px}
 @media(max-width:700px){.advantage-photo{height:105px}.advantage-card{min-height:0}.advantage-card h3{margin-top:15px}}
+
+/* AETERIUM — white architectural glow and responsive six-card layout */
+.advantages{background:radial-gradient(ellipse at 50% 0%,rgba(238,243,255,.055),transparent 48%)}
+.advantage-card{background:linear-gradient(145deg,rgba(25,29,31,.97),rgba(8,11,13,.99));border-color:rgba(232,238,247,.22);box-shadow:inset 0 0 34px rgba(240,245,255,.025);border-radius:5px 22px 5px 22px}
+.advantage-card:before{background:radial-gradient(circle,rgba(246,249,255,.22),rgba(218,229,245,.09) 38%,transparent 72%)}
+.advantage-card:after{background:linear-gradient(90deg,transparent,rgba(244,247,255,.8),transparent);opacity:.45}
+.advantage-symbol{color:rgba(244,247,255,.9);text-shadow:0 0 22px rgba(235,242,255,.55)}
+.advantage-photo{height:132px;filter:brightness(1.08) saturate(.68);border-color:rgba(235,241,250,.3);box-shadow:0 0 24px rgba(240,245,255,.08)}
+.advantage-card:hover .advantage-photo{filter:brightness(1.16) saturate(.82)}
+.advantage-index{color:#e4e8ef}
+@media(max-width:700px){
+ .advantage-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+ .advantage-card{padding:15px 13px 16px;min-width:0}
+ .advantage-photo{height:104px}
+ .advantage-index{font-size:8px;letter-spacing:.1em}
+ .advantage-symbol{right:12px;top:10px;font-size:25px}
+ .advantage-card h3{font-size:21px;line-height:1.08;margin:13px 0 7px}
+ .advantage-card p{font-size:10px;line-height:1.55}
+}
+@media(max-width:360px){
+ .advantage-grid{gap:8px}
+ .advantage-card{padding:12px 10px}
+ .advantage-photo{height:88px}
+ .advantage-card h3{font-size:19px}
+ .advantage-card p{font-size:9px}
+}
+
 </style>
 </head>
 <body>
@@ -166,15 +193,15 @@ section{padding:130px 0;position:relative}.section-head{display:flex;justify-con
   <div class="wrap">
     <div class="section-head">
       <div><div class="eyebrow">01 / ПРИНЦИПЫ AETERIUM</div><h2 class="serif" id="advantagesTitle" style="font-size:clamp(48px,7vw,88px);margin:22px 0 0">Свет в <span class="metal">деталях</span></h2></div>
-      <p>Шесть принципов, на которых строится продуманная световая среда: от первого замысла до точной настройки атмосферы.</p>
+      <p>Шесть сценариев архитектурного освещения — от мягкого общего света до точных световых акцентов и интеллектуального управления.</p>
     </div>
     <div class="advantage-grid">
-      <article class="advantage-card"><span class="advantage-index">01</span><span class="advantage-symbol" aria-hidden="true">✳</span><img class="advantage-photo" src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=520&q=80" alt="" loading="lazy" decoding="async"><h3>Архитектурный подход</h3><p>Световая композиция учитывает геометрию, пропорции и характер пространства.</p></article>
-      <article class="advantage-card"><span class="advantage-index">02</span><span class="advantage-symbol" aria-hidden="true">◌</span><img class="advantage-photo" src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=520&q=80" alt="" loading="lazy" decoding="async"><h3>Сценарии атмосферы</h3><p>Разные режимы освещения для повседневных задач, отдыха и особых моментов.</p></article>
-      <article class="advantage-card"><span class="advantage-index">03</span><span class="advantage-symbol" aria-hidden="true">⌁</span><img class="advantage-photo" src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=520&q=80" alt="" loading="lazy" decoding="async"><h3>Работа с материалом</h3><p>Подчёркиваем фактуру камня, дерева, металла и других поверхностей светом.</p></article>
-      <article class="advantage-card"><span class="advantage-index">04</span><span class="advantage-symbol" aria-hidden="true">◇</span><img class="advantage-photo" src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=520&q=80" alt="" loading="lazy" decoding="async"><h3>Точная интеграция</h3><p>Учитываем расположение источников, инженерные условия и визуальную чистоту.</p></article>
-      <article class="advantage-card"><span class="advantage-index">05</span><span class="advantage-symbol" aria-hidden="true">⟡</span><img class="advantage-photo" src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=520&q=80" alt="" loading="lazy" decoding="async"><h3>Комфорт для глаз</h3><p>Продумываем баланс яркости, контраста и направленности света для разных зон.</p></article>
-      <article class="advantage-card"><span class="advantage-index">06</span><span class="advantage-symbol" aria-hidden="true">⌖</span><img class="advantage-photo" src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=520&q=80" alt="" loading="lazy" decoding="async"><h3>Индивидуальная настройка</h3><p>Подбираем решение под особенности объекта и согласованную концепцию проекта.</p></article>
+      <article class="advantage-card"><span class="advantage-index">01 / LIVING</span><span class="advantage-symbol" aria-hidden="true">✳</span><img class="advantage-photo" src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=84" alt="Гостиная с мягкой белой контурной подсветкой потолка" loading="lazy" decoding="async"><h3>Многоуровневый свет</h3><p>Общее, акцентное и скрытое освещение создают глубину и комфорт.</p></article>
+      <article class="advantage-card"><span class="advantage-index">02 / DINING</span><span class="advantage-symbol" aria-hidden="true">◌</span><img class="advantage-photo" src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=900&q=84" alt="Кухня-столовая с подвесным и рабочим освещением" loading="lazy" decoding="async"><h3>Индивидуальные сценарии</h3><p>Настраиваем свет для работы, отдыха, ужина и приёма гостей.</p></article>
+      <article class="advantage-card"><span class="advantage-index">03 / DETAILS</span><span class="advantage-symbol" aria-hidden="true">⌁</span><img class="advantage-photo" src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=900&q=84" alt="Фактурная каменная стена с направленным акцентным светом" loading="lazy" decoding="async"><h3>Акцент на деталях</h3><p>Подчёркиваем фактуру камня, дерева, металла и предметов интерьера.</p></article>
+      <article class="advantage-card"><span class="advantage-index">04 / REST</span><span class="advantage-symbol" aria-hidden="true">◇</span><img class="advantage-photo" src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=900&q=84" alt="Спальня с мягким рассеянным белым вечерним светом" loading="lazy" decoding="async"><h3>Комфорт и отдых</h3><p>Мягкий свет без резких контрастов для спокойной атмосферы.</p></article>
+      <article class="advantage-card"><span class="advantage-index">05 / SMART</span><span class="advantage-symbol" aria-hidden="true">⟡</span><img class="advantage-photo" src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=900&q=84" alt="Современный интерьер с управляемыми световыми зонами" loading="lazy" decoding="async"><h3>Умное управление</h3><p>Меняйте яркость и атмосферу со смартфона, панели или по расписанию.</p></article>
+      <article class="advantage-card"><span class="advantage-index">06 / LED</span><span class="advantage-symbol" aria-hidden="true">⌖</span><img class="advantage-photo" src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=900&q=84" alt="Архитектурный коридор со встроенными линейными LED-профилями" loading="lazy" decoding="async"><h3>Энергоэффективность</h3><p>Современные LED-решения дают точный свет и помогают рационально расходовать энергию.</p></article>
     </div>
   </div>
 </section>
