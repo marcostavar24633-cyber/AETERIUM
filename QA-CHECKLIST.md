@@ -162,6 +162,7 @@ This checklist separates checks completed from checks that still require a real 
  declaration; query-all helper now uses `$`, restoring parsing of the main interaction script.
 - [x] Re-ran JavaScript syntax parsing on the inline script after the fix.
 - [ ] Открыть главную страницу и убедиться, что после hero отображаются манифест, коллекция, технологии, этапы, FAQ и контакты.
-- [ ] Проверить, что JavaScript не прерывается до инициализации `IntersectionObserver` для `.reveal`.
+- [x] Проверить статически fallback для отсутствующего `IntersectionObserver`: reveal-блоки становятся видимыми, WebGL не зависит от observer.
+- [ ] Проверить fallback в реальном браузере без `IntersectionObserver`.
 - [ ] Проверить консоль браузера на `ReferenceError` при загрузке страницы.
 - [ ] Проверить отображение секций при включённом `prefers-reduced-motion`.
