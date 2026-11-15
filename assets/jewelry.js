@@ -4,3 +4,14 @@ const writeDemo=v=>localStorage.setItem('aeterium-demo-cart',JSON.stringify(v));
 async function loadCatalog(){const r=await fetch('./data/products.json');if(!r.ok)throw Error('Не удалось загрузить каталог');return r.json()}
 function productCard(p){return `<article class="j-card"><a href="./product.html?slug=${encodeURIComponent(p.slug)}"><div class="j-photo"><span class="j-tag">${p.new?'Новинка':p.bestseller?'Популярное':'AETERIUM'}</span></div><h3>${p.name}</h3><div class="j-meta">${p.material} · ${p.fineness} · ${p.stone}</div><div class="j-price">${money(p.price)}</div></a><div class="j-card-actions"><button class="j-btn" data-add="${p.id}">В корзину</button><button class="j-btn alt" data-fav="${p.id}" aria-label="В избранное">♡</button></div></article>`}
 document.addEventListener('click',async e=>{const add=e.target.closest('[data-add]'),fav=e.target.closest('[data-fav]');if(add){const cart=readDemo(),id=add.dataset.add;const row=cart.find(x=>x.id===id);row?row.qty++:cart.push({id,qty:1});writeDemo(cart);add.textContent='Добавлено';setTimeout(()=>add.textContent='В корзину',1200)}if(fav){const list=JSON.parse(localStorage.getItem('aeterium-demo-favs')||'[]'),id=fav.dataset.fav;const next=list.includes(id)?list.filter(x=>x!==id):[...list,id];localStorage.setItem('aeterium-demo-favs',JSON.stringify(next));fav.textContent=next.includes(id)?'♥':'♡'}});
+
+document.addEventListener('DOMContentLoaded',()=>{
+ document.querySelectorAll('.j-header').forEach(header=>{
+  const nav=header.querySelector('.j-nav');if(!nav||header.querySelector('.j-menu-toggle'))return;
+  const toggle=document.createElement('button');toggle.className='j-menu-toggle';toggle.type='button';toggle.setAttribute('aria-label','Открыть меню');toggle.setAttribute('aria-expanded','false');toggle.textContent='☰';
+  const panel=document.createElement('nav');panel.className='j-mobile-menu';panel.innerHTML=nav.innerHTML;
+  header.append(toggle);header.after(panel);
+  toggle.addEventListener('click',()=>{const open=panel.classList.toggle('is-open');toggle.setAttribute('aria-expanded',String(open));toggle.textContent=open?'×':'☰'});
+  panel.addEventListener('click',e=>{if(e.target.closest('a')){panel.classList.remove('is-open');toggle.setAttribute('aria-expanded','false');toggle.textContent='☰'}});
+ });
+});
