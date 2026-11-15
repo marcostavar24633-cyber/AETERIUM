@@ -11,3 +11,5 @@
 .j-qty{display:inline-flex;align-items:center;gap:10px}
 .j-qty button{width:30px;height:30px;border:1px solid var(--line);background:var(--paper);border-radius:50%}
 @media(max-width:650px){.j-category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.j-menu-toggle{display:inline-grid;place-items:center}.j-header{position:relative}.j-actions{gap:10px;font-size:10px}}
+
+.j-category-links{display:flex;flex-wrap:wrap;gap:10px 22px;padding:0 0 55px}.j-category-links a{font-size:11px;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid var(--gold);padding:7px 0}#demo-checkout{display:grid;gap:16px}#demo-checkout label{display:grid;gap:8px;font-size:12px}#demo-checkout textarea{width:100%}
