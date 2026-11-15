@@ -1,0 +1,1 @@
+sLoad().then(d=>{const ids=sRead(sFavKey),items=d.products.filter(p=>ids.includes(p.id));document.querySelector('#s-favs').innerHTML=items.length?items.map(sCard).join(''):'<p>Пока нет сохранённых товаров.</p>'}).catch(e=>document.querySelector('#s-favs').textContent=e.message);
