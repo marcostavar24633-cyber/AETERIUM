@@ -1,1 +1,0 @@
-loadCatalog().then(d=>{document.querySelector('#featured').innerHTML=d.products.filter(p=>p.featured).slice(0,8).map(productCard).join('')}).catch(e=>document.querySelector('#featured').textContent=e.message);
