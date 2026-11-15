@@ -1,0 +1,1 @@
+sLoad().then(d=>{document.querySelector('#s-featured').innerHTML=d.products.filter(p=>p.featured).slice(0,8).map(sCard).join('')}).catch(e=>document.querySelector('#s-featured').textContent=e.message);
