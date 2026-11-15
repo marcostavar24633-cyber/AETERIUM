@@ -11,3 +11,11 @@
 .s-toolbar .s-field{width:100%;min-width:0}
 .s-toolbar select{width:100%;min-width:0;max-width:100%}
 .s-toolbar input{min-width:0;max-width:100%}
+
+/* Audio system builder */
+.s-builder{max-width:760px;padding:28px;background:var(--panel);border:1px solid var(--line)}
+.s-builder .s-form{grid-template-columns:repeat(2,minmax(0,1fr));max-width:none;gap:18px}
+.s-builder .s-form label:last-of-type{grid-column:1/-1}
+.s-builder .s-form button{justify-self:start}
+.s-builder-results{margin-top:35px}
+@media(max-width:680px){.s-builder{padding:16px}.s-builder .s-form{grid-template-columns:1fr}.s-builder .s-form label:last-of-type{grid-column:auto}.s-builder .s-form button{width:100%}}
