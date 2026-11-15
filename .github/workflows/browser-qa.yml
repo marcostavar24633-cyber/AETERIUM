@@ -81,6 +81,18 @@ jobs:
             check(await page.locator('#s-builder-results .s-card').count()>0,'audio builder returns demo recommendations');
             check((await page.locator('#s-builder-results').innerText()).includes('не проверка совместимости'),'builder discloses compatibility limitation');
             await page.goto('http://127.0.0.1:4173/catalog.html');
+            await page.waitForSelector('#s-products .s-card');
+            await page.locator('[data-s-compare]').nth(0).click();
+            await page.locator('[data-s-compare]').nth(1).click();
+            await page.goto('http://127.0.0.1:4173/compare.html');
+            await page.waitForSelector('.s-compare-table');
+            check(await page.locator('.s-compare-table thead th').count()===3,'comparison shows two products side by side');
+            check((await page.locator('.s-compare-table').innerText()).includes('Подключение'),'comparison displays specifications');
+            await page.locator('[data-remove]').first().click();
+            check(await page.locator('.s-compare-table thead th').count()===2,'comparison removes selected product');
+            await page.locator('#s-compare-clear').click();
+            check(await page.locator('.s-empty').count()===1,'comparison clear state works');
+            await page.goto('http://127.0.0.1:4173/catalog.html');
             check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'390px catalog has no horizontal overflow');
             await page.setViewportSize({width:320,height:740});
             check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'320px catalog has no horizontal overflow');
