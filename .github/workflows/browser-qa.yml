@@ -1,7 +1,7 @@
-name: Browser QA
+name: SONORA Browser QA
 on:
   push:
-    branches: [main, jewelry-rebuild]
+    branches: [sonora-music-store]
   pull_request:
   workflow_dispatch:
 permissions:
@@ -9,7 +9,7 @@ permissions:
 jobs:
   storefront-smoke:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -20,7 +20,7 @@ jobs:
           npm init -y
           npm install --no-save playwright
           npx playwright install --with-deps chromium
-      - name: Run storefront browser tests
+      - name: Run SONORA browser tests
         run: |
           node --input-type=module <<'NODE'
           import { chromium } from 'playwright';
@@ -28,18 +28,10 @@ jobs:
           import { readFile, stat } from 'node:fs/promises';
           import { resolve, extname } from 'node:path';
           const root=process.cwd();
-          const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8'};
+          const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.xml':'application/xml; charset=utf-8','.txt':'text/plain; charset=utf-8'};
           const server=createServer(async(req,res)=>{
-            try{
-              const url=new URL(req.url,'http://localhost');
-              const pathname=decodeURIComponent(url.pathname);
-              const path=resolve(root,'.'+(pathname==='/'?'/index.html':pathname));
-              if(!path.startsWith(root)){res.writeHead(403).end();return}
-              const info=await stat(path);
-              if(!info.isFile()){res.writeHead(404).end();return}
-              res.writeHead(200,{'content-type':types[extname(path)]||'application/octet-stream'});
-              res.end(await readFile(path));
-            }catch{res.writeHead(404).end('Not found')}
+            try{const url=new URL(req.url,'http://localhost');const pathname=decodeURIComponent(url.pathname);const path=resolve(root,'.'+(pathname==='/'?'/index.html':pathname));if(!path.startsWith(root)){res.writeHead(403).end();return}const info=await stat(path);if(!info.isFile()){res.writeHead(404).end();return}res.writeHead(200,{'content-type':types[extname(path)]||'application/octet-stream'});res.end(await readFile(path))}
+            catch{res.writeHead(404).end('Not found')}
           });
           await new Promise(r=>server.listen(4173,'127.0.0.1',r));
           const browser=await chromium.launch({headless:true}),failures=[];
@@ -48,45 +40,43 @@ jobs:
             const page=await browser.newPage({viewport:{width:1440,height:900}});
             const errors=[];page.on('pageerror',e=>errors.push(e.message));
             await page.goto('http://127.0.0.1:4173/');
-            check((await page.title()).includes('JEWELRY'),'jewelry homepage title');
-            await page.waitForSelector('#featured .j-card');
-            check(await page.locator('#featured .j-card').count()===8,'featured products render');
-            for (const slug of ['rings','engagement-rings','wedding-rings','earrings','necklaces','chains','bracelets','pendants','brooches','mens-jewelry','kids-jewelry','jewelry-sets','gifts-category','exclusive']) {
+            check((await page.title()).includes('SONORA'),'SONORA homepage title');
+            await page.waitForSelector('#s-featured .s-card');
+            check(await page.locator('#s-featured .s-card').count()===8,'featured products render');
+            for(const slug of ['headphones','speakers','vinyl-players','vinyl','amplifiers','studio','dj','accessories']){
               await page.goto('http://127.0.0.1:4173/'+slug+'.html');
-              await page.waitForSelector('#products .j-card');
-              check(await page.locator('#products .j-card').count()>0,'category page '+slug+' renders products');
+              await page.waitForSelector('#s-products .s-card');
+              check(await page.locator('#s-products .s-card').count()>0,'category '+slug+' renders');
             }
             await page.goto('http://127.0.0.1:4173/catalog.html');
-            await page.waitForSelector('#products .j-card');
-            check(await page.locator('#products .j-card').count()===120,'120 demo products render');
-            await page.locator('#category').selectOption('rings');
-            check(await page.locator('#products .j-card').count()>0,'category filter returns products');
-            await page.locator('#q').fill('AETERIUM-no-match');
-            check(await page.locator('#products .j-card').count()===0,'search empty state works');
-            await page.goto('http://127.0.0.1:4173/product.html?slug=rings-aurora-001');
-            check(await page.locator('.j-info h1').count()===1,'individual product page renders');
-            await page.locator('[data-add]').click();
+            await page.waitForSelector('#s-products .s-card');
+            check(await page.locator('#s-products .s-card').count()===64,'64 demo audio products render');
+            await page.locator('#scat').selectOption('headphones');
+            check(await page.locator('#s-products .s-card').count()>0,'category filter works');
+            await page.locator('#sq').fill('SONORA-no-match');
+            check(await page.locator('#s-products .s-card').count()===0,'search empty state works');
+            await page.goto('http://127.0.0.1:4173/product.html?slug=headphones-auralis-001');
+            check(await page.locator('.s-info h1').count()===1,'individual product page renders');
+            await page.locator('[data-s-add]').click();
             await page.goto('http://127.0.0.1:4173/cart.html');
-            await page.waitForSelector('#cart-content');
-            check((await page.locator('#cart-content').innerText()).includes('Итого'),'cart total renders');
-            await page.locator('[data-qty="1"]').click();
-            check((await page.locator('#cart-content').innerText()).includes('2'),'cart quantity can increase');
+            await page.waitForSelector('#s-cart');
+            check((await page.locator('#s-cart').innerText()).includes('Итого'),'cart total renders');
+            await page.locator('[data-s-qty="1"]').click();
+            check((await page.locator('#s-cart').innerText()).includes('2'),'cart quantity changes');
             await page.goto('http://127.0.0.1:4173/checkout.html');
-            await page.locator('#demo-checkout [name="name"]').fill('Demo');
-            await page.locator('#demo-checkout button[type="submit"]').click();
-            check((await page.locator('#checkout-result').innerText()).includes('НЕ создан'),'checkout clearly remains demo-only');
+            await page.locator('#s-checkout [name="name"]').fill('Demo');
+            await page.locator('#s-checkout button[type="submit"]').click();
+            check((await page.locator('#s-checkout-result').innerText()).includes('не создан'),'checkout remains demo-only');
             await page.setViewportSize({width:390,height:844});
             await page.goto('http://127.0.0.1:4173/');
-            await page.locator('.j-menu-toggle').click();
-            check(await page.locator('.j-mobile-menu.is-open').count()===1,'mobile navigation opens');
+            await page.locator('.s-menu-toggle').click();
+            check(await page.locator('.s-mobile-menu.open').count()===1,'mobile navigation opens');
             check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'390px homepage has no horizontal overflow');
             await page.goto('http://127.0.0.1:4173/catalog.html');
-            await page.waitForTimeout(100);
             check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'390px catalog has no horizontal overflow');
             await page.setViewportSize({width:320,height:740});
-            await page.waitForTimeout(100);
             check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'320px catalog has no horizontal overflow');
-            check(errors.length===0,'no uncaught JavaScript errors: '+errors.join('; '));
+            check(errors.length===0,'no uncaught JS errors: '+errors.join('; '));
           }finally{await browser.close();await new Promise(r=>server.close(r))}
           if(failures.length)process.exit(1);
           NODE
