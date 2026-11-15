@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /checkout.html
+Sitemap: https://marcostavar24633-cyber.github.io/AETERIUM/sitemap.xml
