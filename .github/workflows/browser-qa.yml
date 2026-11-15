@@ -72,6 +72,14 @@ jobs:
             await page.locator('.s-menu-toggle').click();
             check(await page.locator('.s-mobile-menu.open').count()===1,'mobile navigation opens');
             check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'390px homepage has no horizontal overflow');
+            await page.goto('http://127.0.0.1:4173/builder.html');
+            check((await page.title()).includes('Подбор системы'),'audio builder page title');
+            await page.locator('#s-builder-form [name="scenario"]').selectOption('vinyl');
+            await page.locator('#s-builder-form [name="budget"]').selectOption('100000');
+            await page.locator('#s-builder-form button[type="submit"]').click();
+            await page.waitForSelector('#s-builder-results .s-card');
+            check(await page.locator('#s-builder-results .s-card').count()>0,'audio builder returns demo recommendations');
+            check((await page.locator('#s-builder-results').innerText()).includes('не проверка совместимости'),'builder discloses compatibility limitation');
             await page.goto('http://127.0.0.1:4173/catalog.html');
             check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'390px catalog has no horizontal overflow');
             await page.setViewportSize({width:320,height:740});
