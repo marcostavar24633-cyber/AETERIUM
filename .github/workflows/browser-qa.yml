@@ -1,105 +1,76 @@
 name: Browser QA
-
 on:
   push:
-    branches: [main]
+    branches: [main, jewelry-rebuild]
   pull_request:
   workflow_dispatch:
-
 permissions:
   contents: read
-
 jobs:
-  chromium-smoke:
+  storefront-smoke:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 22
-
       - name: Install Playwright
         run: |
           npm init -y
           npm install --no-save playwright
           npx playwright install --with-deps chromium
-
-      - name: Run browser smoke tests
+      - name: Run storefront browser tests
         run: |
           node --input-type=module <<'NODE'
           import { chromium } from 'playwright';
           import { createServer } from 'node:http';
-          import { readFile } from 'node:fs/promises';
-
-          const html = await readFile('index.html');
-          const server = createServer((req, res) => {
-            res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' });
-            res.end(html);
+          import { readFile, stat } from 'node:fs/promises';
+          import { resolve, extname } from 'node:path';
+          const root=process.cwd();
+          const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8'};
+          const server=createServer(async(req,res)=>{
+            try{
+              const url=new URL(req.url,'http://localhost');
+              const path=resolve(root,'.'+decodeURIComponent(url.pathname));
+              if(!path.startsWith(root)){res.writeHead(403).end();return}
+              const info=await stat(path);
+              if(!info.isFile()){res.writeHead(404).end();return}
+              res.writeHead(200,{'content-type':types[extname(path)]||'application/octet-stream'});
+              res.end(await readFile(path));
+            }catch{res.writeHead(404).end('Not found')}
           });
-          await new Promise(resolve => server.listen(4173, '127.0.0.1', resolve));
-
-          const browser = await chromium.launch({ headless: true });
-          const failures = [];
-          const check = (condition, label) => {
-            if (!condition) failures.push(label);
-            console.log(`${condition ? 'PASS' : 'FAIL'} — ${label}`);
-          };
-
-          try {
-            const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
-            const pageErrors = [];
-            page.on('pageerror', error => pageErrors.push(error.message));
-            await page.goto('http://127.0.0.1:4173', { waitUntil: 'domcontentloaded' });
-
-            check((await page.title()).includes('AETERIUM'), 'page title is present');
-            check(await page.locator('#main-content').count() === 1, 'main landmark exists');
-            check(await page.locator('#contactForm').count() === 1, 'contact form exists');
-
-            const themeBefore = await page.locator('html').getAttribute('data-theme');
-            await page.locator('#theme').click();
-            const themeAfter = await page.locator('html').getAttribute('data-theme');
-            check(themeBefore !== themeAfter, 'theme toggle changes the active theme');
-            await page.reload({ waitUntil: 'domcontentloaded' });
-            check(await page.locator('html').getAttribute('data-theme') === themeAfter, 'theme preference persists after reload');
-
-            await page.locator('#navMode').click();
-            check(await page.locator('#navMode').getAttribute('aria-expanded') === 'true', 'orbit menu exposes expanded state');
-            check(await page.locator('#orbit a').first().evaluate(el => el === document.activeElement), 'orbit menu moves focus to its first link');
-            await page.keyboard.press('Escape');
-            check(await page.locator('#navMode').getAttribute('aria-expanded') === 'false', 'Escape closes the orbit menu');
-            check(await page.locator('#navMode').evaluate(el => el === document.activeElement), 'focus returns to the menu button');
-
-            await page.setViewportSize({ width: 390, height: 844 });
-            await page.waitForTimeout(150);
-            const mobileOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
-            check(!mobileOverflow, '390px viewport has no horizontal page overflow');
-
-            await page.setViewportSize({ width: 320, height: 740 });
+          await new Promise(r=>server.listen(4173,'127.0.0.1',r));
+          const browser=await chromium.launch({headless:true}),failures=[];
+          const check=(v,n)=>{console.log((v?'PASS':'FAIL')+' — '+n);if(!v)failures.push(n)};
+          try{
+            const page=await browser.newPage({viewport:{width:1440,height:900}});
+            const errors=[];page.on('pageerror',e=>errors.push(e.message));
+            await page.goto('http://127.0.0.1:4173/');
+            check((await page.title()).includes('JEWELRY'),'jewelry homepage title');
+            await page.waitForSelector('#featured .j-card');
+            check(await page.locator('#featured .j-card').count()===8,'featured products render');
+            await page.goto('http://127.0.0.1:4173/catalog.html');
+            await page.waitForSelector('#products .j-card');
+            check(await page.locator('#products .j-card').count()===120,'120 demo products render');
+            await page.locator('#category').selectOption('rings');
+            check(await page.locator('#products .j-card').count()>0,'category filter returns products');
+            await page.locator('#q').fill('AETERIUM-no-match');
+            check(await page.locator('#products .j-card').count()===0,'search empty state works');
+            await page.goto('http://127.0.0.1:4173/product.html?slug=rings-aurora-001');
+            check(await page.locator('.j-info h1').count()===1,'individual product page renders');
+            await page.locator('[data-add]').click();
+            await page.goto('http://127.0.0.1:4173/cart.html');
+            await page.waitForSelector('#cart-content');
+            check((await page.locator('#cart-content').innerText()).includes('Итого'),'cart total renders');
+            await page.setViewportSize({width:390,height:844});
+            await page.goto('http://127.0.0.1:4173/catalog.html');
             await page.waitForTimeout(100);
-            const overflowDetails = await page.evaluate(() => ({ overflow: document.documentElement.scrollWidth > window.innerWidth + 1, width: document.documentElement.scrollWidth, offenders: [...document.querySelectorAll('body *')].map(el => ({ tag: el.tagName, id: el.id, className: typeof el.className === 'string' ? el.className : '', right: Math.round(el.getBoundingClientRect().right), left: Math.round(el.getBoundingClientRect().left), width: Math.round(el.getBoundingClientRect().width) })).filter(x => x.right > window.innerWidth + 1 || x.left < -1).sort((a,b) => b.right-a.right).slice(0,12) }));
-            if (overflowDetails.overflow) console.log('320px overflow diagnostics: ' + JSON.stringify(overflowDetails));
-            check(!overflowDetails.overflow, '320px viewport has no horizontal page overflow');
-
-            const invalidFormBlocked = await page.locator('#contactForm').evaluate(form => !form.checkValidity());
-            check(invalidFormBlocked, 'required form fields block an empty submission');
-
-            const reduced = await browser.newPage({ reducedMotion: 'reduce' });
-            await reduced.goto('http://127.0.0.1:4173', { waitUntil: 'domcontentloaded' });
-            check(await reduced.evaluate(() => matchMedia('(prefers-reduced-motion: reduce)').matches), 'reduced-motion preference is detected');
-            await reduced.close();
-
-            check(pageErrors.length === 0, `no uncaught page errors (${pageErrors.join('; ') || 'none'})`);
-          } finally {
-            await browser.close();
-            await new Promise(resolve => server.close(resolve));
-          }
-
-          if (failures.length) {
-            console.error(`Browser QA failed: ${failures.join(', ')}`);
-            process.exit(1);
-          }
+            check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'390px catalog has no horizontal overflow');
+            await page.setViewportSize({width:320,height:740});
+            await page.waitForTimeout(100);
+            check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'320px catalog has no horizontal overflow');
+            check(errors.length===0,'no uncaught JavaScript errors: '+errors.join('; '));
+          }finally{await browser.close();await new Promise(r=>server.close(r))}
+          if(failures.length)process.exit(1);
           NODE
