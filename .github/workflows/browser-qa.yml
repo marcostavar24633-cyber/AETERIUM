@@ -51,6 +51,11 @@ jobs:
             check((await page.title()).includes('JEWELRY'),'jewelry homepage title');
             await page.waitForSelector('#featured .j-card');
             check(await page.locator('#featured .j-card').count()===8,'featured products render');
+            for (const slug of ['rings','engagement-rings','wedding-rings','earrings','necklaces','chains','bracelets','pendants','brooches','mens-jewelry','kids-jewelry','jewelry-sets','gifts-category','exclusive']) {
+              await page.goto('http://127.0.0.1:4173/'+slug+'.html');
+              await page.waitForSelector('#products .j-card');
+              check(await page.locator('#products .j-card').count()>0,'category page '+slug+' renders products');
+            }
             await page.goto('http://127.0.0.1:4173/catalog.html');
             await page.waitForSelector('#products .j-card');
             check(await page.locator('#products .j-card').count()===120,'120 demo products render');
@@ -64,7 +69,17 @@ jobs:
             await page.goto('http://127.0.0.1:4173/cart.html');
             await page.waitForSelector('#cart-content');
             check((await page.locator('#cart-content').innerText()).includes('Итого'),'cart total renders');
+            await page.locator('[data-qty="1"]').click();
+            check((await page.locator('#cart-content').innerText()).includes('2'),'cart quantity can increase');
+            await page.goto('http://127.0.0.1:4173/checkout.html');
+            await page.locator('#demo-checkout [name="name"]').fill('Demo');
+            await page.locator('#demo-checkout button[type="submit"]').click();
+            check((await page.locator('#checkout-result').innerText()).includes('НЕ создан'),'checkout clearly remains demo-only');
             await page.setViewportSize({width:390,height:844});
+            await page.goto('http://127.0.0.1:4173/');
+            await page.locator('.j-menu-toggle').click();
+            check(await page.locator('.j-mobile-menu.is-open').count()===1,'mobile navigation opens');
+            check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'390px homepage has no horizontal overflow');
             await page.goto('http://127.0.0.1:4173/catalog.html');
             await page.waitForTimeout(100);
             check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'390px catalog has no horizontal overflow');
