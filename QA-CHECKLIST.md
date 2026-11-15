@@ -13,7 +13,7 @@ This checklist separates checks completed from checks that still require a real 
  selector declaration (2026-11-15).
 - [x] HTML IDs are unique.
 - [x] Every in-page `href="#…"` points to an existing ID.
-- [x] Every referenced CSS custom property has a definition.
+- [x] Every referenced CSS custom property is defined in CSS or initialized dynamically by JavaScript.
 - [x] Reduced-motion CSS is present.
 - [x] Keyboard skip link points to the main content.
 - [x] Orbit menu exposes its expanded state to assistive technology.
@@ -33,7 +33,10 @@ This checklist separates checks completed from checks that still require a real 
 - [x] Contact field validates either a basic email address or a plausible phone number before showing the demo confirmation.
 - [x] Demo form confirmation no longer implies that an enquiry was actually delivered.
 - [x] Documented the static demo's security boundaries and production response-header recommendations in `SECURITY.md`.
-- [x] Added an explicit referrer policy and preconnected to the Three.js CDN origin.\n- [x] Expanded the three service-direction descriptions and clarified the technical and delivery process.\n- [x] Added a five-question FAQ section and linked it from both navigation systems.\n- [x] Marked the site as a concept project to avoid implying unverified real-world business credentials.
+- [x] Added an explicit referrer policy and preconnected to the Three.js CDN origin.
+- [x] Expanded the three service-direction descriptions and clarified the technical and delivery process.
+- [x] Added a five-question FAQ section and linked it from both navigation systems.
+- [x] Marked the site as a concept project to avoid implying unverified real-world business credentials.
 
 ## Manual browser checks — pending
 
@@ -111,7 +114,10 @@ This checklist separates checks completed from checks that still require a real 
 - [x] Contact field validates either a basic email address or a plausible phone number before showing the demo confirmation.
 - [x] Demo form confirmation no longer implies that an enquiry was actually delivered.
 - [x] Documented the static demo's security boundaries and production response-header recommendations in `SECURITY.md`.
-- [x] Added an explicit referrer policy and preconnected to the Three.js CDN origin.\n- [x] Expanded the three service-direction descriptions and clarified the technical and delivery process.\n- [x] Added a five-question FAQ section and linked it from both navigation systems.\n- [x] Marked the site as a concept project to avoid implying unverified real-world business credentials.
+- [x] Added an explicit referrer policy and preconnected to the Three.js CDN origin.
+- [x] Expanded the three service-direction descriptions and clarified the technical and delivery process.
+- [x] Added a five-question FAQ section and linked it from both navigation systems.
+- [x] Marked the site as a concept project to avoid implying unverified real-world business credentials.
 
 ## Manual browser checks — pending
 
