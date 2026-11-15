@@ -32,7 +32,8 @@ jobs:
           const server=createServer(async(req,res)=>{
             try{
               const url=new URL(req.url,'http://localhost');
-              const path=resolve(root,'.'+decodeURIComponent(url.pathname));
+              const pathname=decodeURIComponent(url.pathname);
+              const path=resolve(root,'.'+(pathname==='/'?'/index.html':pathname));
               if(!path.startsWith(root)){res.writeHead(403).end();return}
               const info=await stat(path);
               if(!info.isFile()){res.writeHead(404).end();return}
